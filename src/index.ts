@@ -13,8 +13,11 @@ app.use('/router', examplerouter)
 
 app.get('/standard/:url*', async (req: Request, res: Response) => {
   const url = req.params.url + req.params[0]
-  const data = await (await fetch(url)).text()
-  res.send(data);
+  const data = await (await fetch(url)).text();
+  const hostOfURL = url.split('/')[2]
+  const split = data.split(/src="\//)
+  const betterData = split.join('src="https://expressbotproxy.onrender.com/standard/' + hostOfURL + '/')
+  res.send(betterData);
 });
 
 app.get('/bot/:url*', async (req: Request, res: Response) => {
